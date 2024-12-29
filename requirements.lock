@@ -8,3 +8,30 @@
 #   with-sources: false
 
 -e file:.
+boto3==1.35.90
+    # via metaflow
+botocore==1.35.90
+    # via boto3
+    # via s3transfer
+certifi==2024.12.14
+    # via requests
+charset-normalizer==3.4.1
+    # via requests
+idna==3.10
+    # via requests
+jmespath==1.0.1
+    # via boto3
+    # via botocore
+metaflow==2.13
+    # via metaflow-slack-notifier
+python-dateutil==2.9.0.post0
+    # via botocore
+requests==2.32.3
+    # via metaflow
+s3transfer==0.10.4
+    # via boto3
+six==1.17.0
+    # via python-dateutil
+urllib3==2.3.0
+    # via botocore
+    # via requests

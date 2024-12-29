@@ -9,4 +9,7 @@ wheels/
 # venv
 .venv
 
+# metaflow
+.metaflow/
+
 .python-version

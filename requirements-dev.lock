@@ -8,3 +8,61 @@
 #   with-sources: false
 
 -e file:.
+black==24.10.0
+boto3==1.35.90
+    # via metaflow
+botocore==1.35.90
+    # via boto3
+    # via s3transfer
+certifi==2024.12.14
+    # via requests
+charset-normalizer==3.4.1
+    # via requests
+click==8.1.8
+    # via black
+exceptiongroup==1.2.2
+    # via pytest
+idna==3.10
+    # via requests
+iniconfig==2.0.0
+    # via pytest
+isort==5.13.2
+jmespath==1.0.1
+    # via boto3
+    # via botocore
+metaflow==2.13
+    # via metaflow-slack-notifier
+mypy==1.14.0
+mypy-extensions==1.0.0
+    # via black
+    # via mypy
+packaging==24.2
+    # via black
+    # via pytest
+pathspec==0.12.1
+    # via black
+platformdirs==4.3.6
+    # via black
+pluggy==1.5.0
+    # via pytest
+pyflakes==3.2.0
+pytest==8.3.4
+python-dateutil==2.9.0.post0
+    # via botocore
+requests==2.32.3
+    # via metaflow
+ruff==0.8.4
+s3transfer==0.10.4
+    # via boto3
+six==1.17.0
+    # via python-dateutil
+tomli==2.2.1
+    # via black
+    # via mypy
+    # via pytest
+typing-extensions==4.12.2
+    # via black
+    # via mypy
+urllib3==2.3.0
+    # via botocore
+    # via requests
