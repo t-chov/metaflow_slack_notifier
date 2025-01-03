@@ -1,37 +1,34 @@
+import traceback
+
 from metaflow import FlowSpec
 from metaflow.decorators import StepDecorator
+
+from .slack import send_message
 
 
 class SlackDecorator(StepDecorator):
     name = "slack"
+    defaults = {
+        "token": None,  # Slack API token for authentication
+        "channel": None,  # Target Slack channel for notifications
+    }
 
-    def task_finished(
-            self,
-            step_name: str,
-            flow: FlowSpec,
-            graph,
-            is_task_ok: bool,
-            retry_count,
-            max_user_code_retries
+    def task_exception(
+        self, exception: Exception, step_name: str, flow: FlowSpec, graph, retry_count: int, max_user_code_retries: int
     ) -> None:
-        """
-        Run after the task context has been finalized.
-
-        is_task_ok is set to False if the user code raised an exception that
-        was not handled by any decorator.
-
-        Note that you can't create or modify data artifacts in this method
-        since the task has been finalized by the time this method
-        is called. Also note that the task may fail after this method has been
-        called, so this method may get called multiple times for a task over
-        multiple attempts, similar to all task_ methods.
-        """
-        print("FOO")
-        print(flow)
-        print([param for param in flow._get_parameters()])
-        print(flow.input)
-        print(flow.foreach_stack())
-        pass
+        """Handles exceptions by sending error information to Slack."""
+        message = f"```\n{str(flow)}\n"
+        message += f"retry_count           : {retry_count}\n"
+        message += f"max_user_code_retries : {max_user_code_retries}\n"
+        message += f"params                : {[param for param in flow._get_parameters()]}\n"
+        message += f"input                 : {flow.input}\n"
+        message += f"foreach               : {flow.foreach_stack()}\n"
+        message += f"{traceback.format_exc()}```"
+        send_message(
+            token=self.attributes["token"],
+            channel=self.attributes["channel"],
+            message=message,
+        )
 
 
 STEP_DECORATORS_DESC = [("slack", ".SlackDecorator")]

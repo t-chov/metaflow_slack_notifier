@@ -32,10 +32,8 @@ jmespath==1.0.1
     # via botocore
 metaflow==2.13
     # via metaflow-slack-notifier
-mypy==1.14.0
 mypy-extensions==1.0.0
     # via black
-    # via mypy
 packaging==24.2
     # via black
     # via pytest
@@ -51,6 +49,7 @@ python-dateutil==2.9.0.post0
     # via botocore
 requests==2.32.3
     # via metaflow
+    # via metaflow-slack-notifier
 ruff==0.8.4
 s3transfer==0.10.4
     # via boto3
@@ -58,11 +57,11 @@ six==1.17.0
     # via python-dateutil
 tomli==2.2.1
     # via black
-    # via mypy
     # via pytest
+types-requests==2.32.0.20241016
 typing-extensions==4.12.2
     # via black
-    # via mypy
 urllib3==2.3.0
     # via botocore
     # via requests
+    # via types-requests

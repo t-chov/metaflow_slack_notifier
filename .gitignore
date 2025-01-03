@@ -13,3 +13,4 @@ wheels/
 .metaflow/
 
 .python-version
+.env
