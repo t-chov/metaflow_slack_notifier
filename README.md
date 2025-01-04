@@ -16,7 +16,7 @@ A Metaflow plugin that sends detailed error notifications to Slack when a flow s
 ## Installation
 
 ```bash
-pip install metaflow-slack-plugin  # Replace with actual package name
+pip install metaflow-slack-notifier
 ```
 
 ## Configuration
@@ -24,8 +24,19 @@ pip install metaflow-slack-plugin  # Replace with actual package name
 Set the following environment variables:
 
 ```bash
-export SLACK_APP_TOKEN="xoxb-your-token"
-export SLACK_CHANNEL="#your-channel"
+export METAFLOW_SLACK_APP_TOKEN="xoxb-your-token"
+export METAFLOW_SLACK_CHANNEL="your-channel"
+```
+
+or use `@environment` decorator:
+
+```python
+@environment(vars={"METAFLOW_SLACK_APP_TOKEN": "xoxb-your-token", "METAFLOW_SLACK_CHANNEL": "your-channel"})
+@slack()
+@step
+def some_step(self):
+    # write your code
+    print("end")
 ```
 
 ## Usage
@@ -36,8 +47,8 @@ Add the `@slack` decorator to any step that you want to monitor.
 from metaflow import FlowSpec, slack, step
 import os
 
-token = os.getenv("SLACK_APP_TOKEN")
-channel = os.getenv("SLACK_CHANNEL")
+token = os.getenv("METAFLOW_SLACK_APP_TOKEN")
+channel = os.getenv("METAFLOW_SLACK_CHANNEL")
 
 class MyFlow(FlowSpec):
     @step

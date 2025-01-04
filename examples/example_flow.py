@@ -1,18 +1,15 @@
 import os
 
-from metaflow import FlowSpec, slack, step
-
-token = os.getenv("SLACK_APP_TOKEN")
-channel = os.getenv("SLACK_CHANNEL")
+from metaflow import FlowSpec, environment, slack, step
 
 
 class ExampleFlow(FlowSpec):
     @step
     def start(self):
-        print("start")
         self.next(self.end)
 
-    @slack(token=token, channel=channel)
+    @environment(vars={"METAFLOW_SLACK_CHANNEL": "alert"})
+    @slack(token=os.getenv("METAFLOW_SLACK_APP_TOKEN"))
     @step
     def end(self):
         1 / 0
