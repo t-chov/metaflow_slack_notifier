@@ -21,17 +21,52 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Install Packages
+    - name: Install Rye
       run: |
-        pip install .
+        curl -sSf https://rye.astral.sh/get | RYE_INSTALL_OPTION="--yes" bash
+        echo "$HOME/.rye/shims" >> $GITHUB_PATH
+
+    - name: Cache Rye dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.rye
+          ~/.cache/pip
+        key: ${{ runner.os }}-rye-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}
+        restore-keys: |
+          ${{ runner.os }}-rye-${{ matrix.python-version }}-
+
+    - name: Install dependencies
+      run: |
+        rye sync --all-features
 
     - name: Run tests
       run: |
-        pytest
+        rye run pytest
 
     - name: Run linters and formatters
       run: |
-        black . --check
-        isort . --check
-        ruff check .
-        pyflakes metaflow_extensions/ tests/
+        rye run black . --check
+        rye run isort . --check
+        rye run ruff check .
+        rye run pyflakes metaflow_extensions/ tests/
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+
+    - name: Install Rye
+      run: |
+        curl -sSf https://rye.astral.sh/get | RYE_INSTALL_OPTION="--yes" bash
+        echo "$HOME/.rye/shims" >> $GITHUB_PATH
+
+    - name: Build package
+      run: |
+        rye build
