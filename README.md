@@ -1,5 +1,7 @@
 # Metaflow Slack Notification Plugin
 
+[![CI](https://github.com/t-chov/metaflow_slack_notifier/actions/workflows/ci.yaml/badge.svg)](https://github.com/t-chov/metaflow_slack_notifier/actions/workflows/ci.yaml)
+
 A Metaflow plugin that sends detailed error notifications to Slack when a flow step fails. This helps teams monitor their Metaflow pipelines and quickly respond to failures.
 
 ## Features
